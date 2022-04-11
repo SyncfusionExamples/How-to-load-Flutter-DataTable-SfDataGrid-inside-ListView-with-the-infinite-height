@@ -1,15 +1,18 @@
-# How-to-load-Flutter-DataTable-SfDataGrid-inside-ListView-with-the-infinite-height
+import 'package:flutter/material.dart';
+import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
-If you wrap the [SfDataGrid](https://pub.dev/documentation/syncfusion_flutter_datagrid/latest/datagrid/SfDataGrid-class.html) inside the [ListView](https://api.flutter.dev/flutter/widgets/ListView-class.html) widget, the DataGrid gets the height of infinity. By default, if the height of the SfDataGrid is infinity, and then DataGrid sets its height to 300. 
+void main() {
+  runApp(const MaterialApp(home: SfDataGridDemo()));
+}
 
-The Syncfusion [Flutter DataTable](https://help.syncfusion.com/flutter/datagrid/overview) provides the support to set the height based on the number of rows available in the DataGrid by using the [shrinkWrapRows](https://pub.dev/documentation/syncfusion_flutter_datagrid/latest/datagrid/SfDataGrid/shrinkWrapRows.html) property.
+class SfDataGridDemo extends StatefulWidget {
+  const SfDataGridDemo({Key? key}) : super(key: key);
 
-The following steps explain how to load the DataGrid inside the ListView with the infinite height,
+  @override
+  _SfDataGridDemoState createState() => _SfDataGridDemoState();
+}
 
-## STEP 1: 
-Initialize the SfDataGrid widget with all the required properties and set `SfDataGrid.shrinkWrapRows` property to true. Wrap the DataGrid inside the ListView widget.
-
-```dart
+class _SfDataGridDemoState extends State<SfDataGridDemo> {
   List<Employee> _employees = <Employee>[];
   late EmployeeDataGridSource _employeeDataSource;
 
@@ -20,7 +23,7 @@ Initialize the SfDataGrid widget with all the required properties and set `SfDat
     _employeeDataSource = EmployeeDataGridSource(employeeData: _employees);
   }
 
-    @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title: const Text('Syncfusion Flutter DataGrid')),
@@ -63,12 +66,23 @@ Initialize the SfDataGrid widget with all the required properties and set `SfDat
                   child: const Text('Salary'))),
         ]);
   }
-```
 
-## STEP 2: 
-Create a data source class by extending [DataGridSource](https://pub.dev/documentation/syncfusion_flutter_datagrid/latest/datagrid/DataGridSource-class.html) for mapping data to the SfDataGrid.
+  List<Employee> getEmployeeData() {
+    return [
+      Employee(10001, 'Lara', 'Project Lead', 40000),
+      Employee(10002, 'James', 'Developer', 23000),
+      Employee(10003, 'Kathryn', 'Project Lead', 43500),
+      Employee(10004, 'Michael', 'Manager', 50000),
+      Employee(10005, 'Martin', 'Developer', 25000),
+      Employee(10006, 'Jack', 'Project Lead', 54000),
+      Employee(10007, 'Balnc', 'UI Designer', 28500),
+      Employee(10008, 'Perry', 'Developer', 15000),
+      Employee(10009, 'Gable', 'Developer', 26000),
+      Employee(10010, 'Grimes', 'Developer', 35000)
+    ];
+  }
+}
 
-```dart
 class EmployeeDataGridSource extends DataGridSource {
   EmployeeDataGridSource({required List<Employee> employeeData}) {
     _dataGridRows = employeeData
@@ -104,7 +118,11 @@ class EmployeeDataGridSource extends DataGridSource {
     }).toList());
   }
 }
-```
->**NOTE**
 
-Also, if you want to set the width based on the number of columns available in DataGrid, you can achieve it by setting the [shrinkWrapColumn](https://pub.dev/documentation/syncfusion_flutter_datagrid/latest/datagrid/SfDataGrid/shrinkWrapColumns.html) property to true.
+class Employee {
+  Employee(this.id, this.name, this.designation, this.salary);
+  final int id;
+  final String name;
+  final String designation;
+  final int salary;
+}
